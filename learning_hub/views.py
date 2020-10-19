@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
 def homepage(request):
-    return render(request = request, template_name='homepage.html')
+    return render(request, 'homepage.html')
+
+def about_page(request):
+    return render(request, 'about.html' )
 

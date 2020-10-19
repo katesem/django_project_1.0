@@ -1,14 +1,12 @@
 {% load static %}
 
-<!doctype html>
-<html lang="en">
-    
+
     <!doctype html>
     <html lang="en">
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Home</title>
+        <title>{% block title %} {% endblock %}</title>
    
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <link rel="stylesheet" type = "text/css" href="{% static '/css/style.css' %}"/>
@@ -24,14 +22,17 @@
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item ">
+              <a class="nav-link" href="/">Home </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">My account</a>
               </li>
 
-            
+            <!--
+                 <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>-->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select Topic
@@ -50,7 +51,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="/about">About</a>
               </li>
           </ul>
           <span class="navbar-text">
@@ -68,17 +69,8 @@
       {% block content %}
     {% endblock %}
 
-  
-
-<!--- 
-<div class="img__container">
-        <img src = "{% static 'images/header.jpg'  %}" class="image" >  
-    </div>
--->
-
-
  
-    <footer class="container py-5">
+    <footer class="containerf py-5">
       <div class="row">
         <div class="col-12 col-md">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mb-2"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
@@ -126,96 +118,9 @@
     </footer>
 
     
-  
-  
+
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   
   </div>
 
-
-
-
-  <!--
-
-    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 py-3">
-          <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-      </div>
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-      </div>
-    </div>
-
-    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-      </div>
-      <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 py-3">
-          <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-      </div>
-    </div>
-
-    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-      </div>
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 py-3">
-          <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-      </div>
-    </div>
-
-    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-      </div>
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 py-3">
-          <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-white shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-      </div>
-    </div>
-
-
-
-    <div class="jumbotron jumbotron-fluid text-white rounded bg-dark">
-    <div class="container">
-    <div class="col-md-8 px-0">
-      <h1 class="display-4 font-italic">Welcome to my Learning Hub !</h1>
-      <p class="lead my-3">Hello! My name is Kate and this is my training project. If your would like to know more about me and  my projects click on the option below...</p>
-      <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">More about me...</a></p>
-    </div>
-  </div>
-</div>
-
--->

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} About {% endblock %}
+
+   
+{% block content %}
+
+<br><h2 align = "center">Briefly about me</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="content content-box"><div class="image"> 
+                <img src = "{% static 'images/ph1.png'%} "class="float-left" width="240" height="200">  
+            </div>
+    <p>Hello! I’m Kate. I don't have any commercial experience as a developer yet but I have enough non-commercial one. See detailes below :)  </p>
+    <div class="info-list">
+        <ul>
+            <li><strong>Age :</strong> 19</li>
+            <li><strong>Current position :</strong> 3rd year student in KHAI</li>
+            <li><strong>Address :</strong> Kharkiv, Ukraine</li>
+            <li><strong>E-mail :</strong> ekaterina.semeniaka@gmail.com</li>
+            <li><strong>My other projects :</strong> <a href="https://github.com/katesem">@katesem</a></li>
+        </ul>
+    </div>
+    <button type="button" class="btn btn-link"> <a href="https://cvio.bslthemes.com/">Download CV</a></button>
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+{% endblock %}
