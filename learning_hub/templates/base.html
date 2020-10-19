@@ -26,7 +26,7 @@
               <a class="nav-link" href="/">Home </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">My account</a>
+                <a class="nav-link" href="#">My </a>
               </li>
 
             <!--
@@ -56,18 +56,26 @@
           </ul>
           <span class="navbar-text">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="">Create an account</a>
-                  </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Log in</a>
-                </li>
+             
+                <li class="nav-item">  <a class="nav-link" href="/my_account">My account</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/log_out">Log out</a> </li>
+            
+                <li class="nav-item">  <a class="nav-link" href="/create_account">Create an account</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/log_in">Log in</a> </li>
           </span>
         </div>
       </nav>
 
       {% block content %}
     {% endblock %}
+
+    <!-- {% if user.is_authenticated %}
+                <li class="nav-item">  <a class="nav-link" href="">My account</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">Log out</a> </li>
+                {% else %}
+                <li class="nav-item">  <a class="nav-link" href="/create_account">Create an account</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">Log in</a> </li>
+                {% endif %}-->
 
  
     <footer class="containerf py-5">
