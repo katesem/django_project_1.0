@@ -1,5 +1,5 @@
 from django import forms
-from .models import Users
+from .models import Users, Questions
 from django.contrib.auth import logout, authenticate, login, get_user_model
 import re
 
@@ -14,9 +14,9 @@ class UserCreationForm(forms.ModelForm):
         fields_required = '__all__'
          
         help_texts = {
-            'email': 'Must contain only letters', 
-            'username': 'Must contain at least 6 including only letters, numbers or underscore ',
-            'password': 'Must contain at least 6 symbols including at least 1 letter and 1 number',
+            'email': 'Must contain only letters.', 
+            'username': 'Must contain at least 6 including only letters, numbers or underscore. ',
+            'password': 'Must contain at least 6 symbols including at least 1 letter and 1 number.',
         }
         
         widgets = {
@@ -36,17 +36,17 @@ class UserCreationForm(forms.ModelForm):
         ch_password = self.cleaned_data['check_password']
         
         if  len(username) < 4  :
-            raise forms.ValidationError('Username must contain at least 4 symbols')
+            raise forms.ValidationError('Username must contain at least 4 symbols.')
          
         elif   re.search(r'[^a-zA-Z0-9_]', username ):
             raise forms.ValidationError('Username can contain only specified symbols.')
         
         
         if len(password) < 6:
-            raise forms.ValidationError('Password must contain at least 6 symbols')
+            raise forms.ValidationError('Password must contain at least 6 symbols.')
         
         elif  not re.search('[A-Za-z]', password) or not  re.search('[0-9]', password) or re.search(r'[^a-zA-Z0-9_]', password):
-            raise forms.ValidationError('Password can contain only specified symbols')
+            raise forms.ValidationError('Password can contain only specified symbols.')
         
         if ch_password != password:
             raise forms.ValidationError('Entered passwords don\'t match. Check your input.')
@@ -63,6 +63,41 @@ class LoginForm(forms.Form):
     def get_user(self):
         return self.user or None
     
+class QuestionForm(forms.ModelForm):
+    
+    class Meta:
+        model = Questions
+        fields = '__all__'
+        fields_required = '__all__'
+         
+        help_texts = {
+            'email': 'Must contain only letters.', 
+            'username': 'Must contain at least 6 including only letters, numbers or underscore. ',
+            'password': 'Must contain at least 6 symbols including at least 1 letter and 1 number.',
+        }
+        
+        widgets = {
+            'question':forms.Textarea(attrs = { 'class' :'form-control','style': 'font-size: x-large', 'rows' : 3, 'cols' : 10}),
+            'option1': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'option2': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'option3': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'option4': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'answer': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        
+        
+    def clean(self):
+        cl_data = super(QuestionForm, self).clean()
+        count = 0
+        if cl_data['answer'] in [*cl_data.values()]:
+            count += 1
+        if count < 2:
+            raise forms.ValidationError('Answer must match one of the options. Check your input.')
+            
+        
     
 ''' 
 

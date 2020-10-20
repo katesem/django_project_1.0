@@ -11,7 +11,6 @@ class Users(AbstractBaseUser):
     username = models.CharField(max_length = 50, unique = True)
     email = models.EmailField(max_length=100, unique=True, validators=[validate_email])
     password = models.CharField(max_length=128)
-    updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -32,24 +31,7 @@ class Users(AbstractBaseUser):
     
     class Meta:
         verbose_name_plural = 'Users'
-    
-    @staticmethod
-    def get_by_id(user_id):
-        try:
-            user = Users.objects.get(id = user_id)
-            return user
-        except Users.DoesNotExist:
-            pass
 
-    @staticmethod
-    def delete_by_id(user_id):
-        try:
-            user = Users.objects.get(id=user_id)
-            user.delete()
-            return True
-        except Users.DoesNotExist:
-            pass
-        return False
 
     @staticmethod
     def create(email, username, password):
@@ -61,6 +43,15 @@ class Users(AbstractBaseUser):
             return user
         except (IntegrityError, AttributeError, ValidationError, DataError):
             pass
+        
+        
+class Questions(models.Model):
+    question = models.TextField()
+    option1 = models.CharField(max_length=100)
+    option2 = models.CharField(max_length=100)
+    option3 = models.CharField(max_length=100)
+    option4 = models.CharField(max_length=100)
+    answer = models.CharField(max_length=100)
         
 '''
 # Create your models here.

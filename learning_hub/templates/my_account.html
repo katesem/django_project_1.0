@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} My account {% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+      My account
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Welcome, {{user.username}} !</h5>
+      <p class="card-text">Here you have some options, order what suits for you best.</p>
+      <a href="#" class="btn btn-dark">Create a quiz</a>
+      <a href="/c_question" class="btn btn-secondary">Create a question</a>
+    </div>
+  </div>
+{% endblock%}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Log in {% endblock %}
+
+{% block content %}
+
+<br>
+<h3 align = 'center'>Log in </h3>
+<div class = "container">
+<div class = "form-group">
+<form method = "POST">
+     {% csrf_token %}
+     {{form.as_p}}
+     {% if form.errors %}
+     {% for field in form %}
+         {% for error in field.errors %}
+             <div class="alert alert-danger">
+                 <strong>{{ error|escape }}</strong>
+             </div>
+         {% endfor %}
+     {% endfor %}
+     {% for error in form.non_field_errors %}
+         <div class="alert alert-danger">
+             <strong>{{ error|escape }}</strong>
+         </div>
+     {% endfor %}
+ {% endif %}
+ {% if u_error %}
+             <div class="alert alert-danger">
+                 <strong>{{ u_error }}</strong>
+             </div>
+{% endif %}
+      <button type = "submit" class = "btn btn-success"> Submit <i class="fa fa-check"></i> </button>
+    </form>
+</div>
+</div>
+
+{% endblock%}
