@@ -35,8 +35,8 @@ class UserCreationForm(forms.ModelForm):
         password = self.cleaned_data['password']
         ch_password = self.cleaned_data['check_password']
         
-        if  len(username) < 6  :
-            raise forms.ValidationError('Username must contain at least 6 symbols')
+        if  len(username) < 4  :
+            raise forms.ValidationError('Username must contain at least 4 symbols')
          
         elif   re.search(r'[^a-zA-Z0-9_]', username ):
             raise forms.ValidationError('Username can contain only specified symbols.')
@@ -54,32 +54,33 @@ class UserCreationForm(forms.ModelForm):
         return cleaned_data
     
     
-class LoginForm():
     
-    class Meta:
-        model = Users
-        fields = ['username', 'password']
-        fields_required = '__all__'
-        
-    widgets = {
-            'username': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
-            'password':forms.PasswordInput(attrs = { 'class' :'form-control','style': 'font-size: x-large'})
-        }
+class LoginForm(forms.Form):
+    Username = forms.CharField( widget =  forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
+    Password = forms.CharField( widget = forms.PasswordInput(attrs = { 'class' :'form-control','style': 'font-size: x-large'}))
+            
+
+    def get_user(self):
+        return self.user or None
     
     
+''' 
+
     def clean(self):                                        #provide additional validation
         cleaned_data = super(LoginForm, self).clean()
+        
         if not self.errors:
             user = authenticate(username=cleaned_data['username'], password=cleaned_data['password'])
             if user is None:
                 raise forms.ValidationError('Invalid entered data. Repeat input.')
             self.user = user
+        
         return cleaned_data
 
     def get_user(self):
         return self.user or None
    
-        
+'''
     
         
     

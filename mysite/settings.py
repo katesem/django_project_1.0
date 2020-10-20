@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'learning_app',
+        'NAME': 'learn_app',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
@@ -104,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'learning_hub.Users'
+#AUTH_USER_MODEL = 'learning_hub.Users'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 

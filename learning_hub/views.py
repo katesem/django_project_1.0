@@ -4,6 +4,7 @@ from .models import Users
 from django.contrib import messages
 from django.contrib.auth import  logout, authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
+from django import forms
 
 Users = get_user_model()
 
@@ -11,10 +12,11 @@ Users = get_user_model()
 def homepage(request):
     return render(request, 'homepage.html')
 
+
 def about_page(request):
     return render(request, 'about.html' )
 
-@login_required
+
 def create_account(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -32,16 +34,23 @@ def log_in(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('Username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            messages.success(request, f"Welcome to site, {user.username}")
-            return redirect('/')
-    else:
-        form = LoginForm()
-    return render(request, 'log_in.html', {'form': form})
+            user = authenticate(username = form.cleaned_data['Username'], password = form.cleaned_data['Password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('/')
+            else:
+                return render(request, 'log_in.html', {'form':  LoginForm(), 'u_error':'Your entered wrong data. Check your input and repeat log in.'})
 
+    return render(request, 'log_in.html', {'form':  LoginForm()})
+
+def log_out(request):
+    logout(request)
+    return redirect('/')
+
+
+def my_account(request):
+    return redirect('/')
 
 '''
 def user_form(request, user_id = 0):
