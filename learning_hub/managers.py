@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 
 class CustomUserManager(BaseUserManager):
     
-    def create_user(self, email, username, password):
+    def create_user(self, email, username, password, ):
         if not email or not username or not password:
             raise ValueError('One or more of required fields are missing')
         email = self.normalize_email(email)

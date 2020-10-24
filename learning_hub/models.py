@@ -5,15 +5,18 @@ from .managers import CustomUserManager
 from django.db import models, IntegrityError
 from django.db.utils import DataError
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import PermissionsMixin
 
 
-class Users(AbstractBaseUser):
+class Users(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length = 50, unique = True)
     email = models.EmailField(max_length=100, unique=True, validators=[validate_email])
     password = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
+    
 
     USERNAME_FIELD = 'username'
     objects = CustomUserManager()
@@ -52,6 +55,11 @@ class Questions(models.Model):
     option3 = models.CharField(max_length=100)
     option4 = models.CharField(max_length=100)
     answer = models.CharField(max_length=100)
+        
+        
+    class Meta:
+        verbose_name_plural = 'Questions'
+        
         
 '''
 # Create your models here.

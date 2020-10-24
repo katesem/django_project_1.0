@@ -50,6 +50,7 @@ def log_out(request):
 def my_account(request):
     return render(request, 'my_account.html')
 
+    
 def create_question(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
@@ -57,3 +58,6 @@ def create_question(request):
             form.save()
             return redirect('/my_account')
     return render(request, 'c_question.html', {'form' : QuestionForm()})
+
+def password_redirect(request):
+    return redirect('/log_in')

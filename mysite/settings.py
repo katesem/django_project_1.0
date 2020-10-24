@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import socket
+#socket.getaddrinfo('localhost', 8000)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-i5^5or%@cbcg4-rz9gt9k1v)mfphjb!q3%jk*ixr-knm_e51w'
+SECRET_KEY = '###-i5^5or%@cbcg4-rz9gt9k1v)mfphjb!q3%j#k*ixr-knm_e51w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -130,6 +131,14 @@ STATICFILES_DIRS = [
      os.path.join(BASE_DIR, 'static')
 ]
 
+# smpt configuration 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = '**********@gmail.com'
+EMAIL_HOST_PASSWORD = '***********'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-
+    

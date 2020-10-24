@@ -97,8 +97,7 @@ class QuestionForm(forms.ModelForm):
         if count < 2:
             raise forms.ValidationError('Answer must match one of the options. Check your input.')
             
-        
-    
+
 ''' 
 
     def clean(self):                                        #provide additional validation
