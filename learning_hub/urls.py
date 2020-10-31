@@ -12,6 +12,11 @@ urlpatterns = [
     path('my_account', views.my_account, name = 'my_account'),
     path('accounts/login/', views.password_redirect),
     
+    path('create_question', views.create_question, name = 'c_question'),
+    path('create_quiz', views.create_quiz, name = 'c_quiz'),
+    
+    
+    # Password reset functionality
     path('reset_password', auth_views.PasswordResetView.as_view(), name="reset_password"),
     
     path('reset_password_sent', auth_views.PasswordResetDoneView.as_view(),  name="password_reset_done"),
@@ -20,5 +25,4 @@ urlpatterns = [
      auth_views.PasswordResetConfirmView.as_view(),  name="password_reset_confirm"), #user’s id encoded in base 64 and token to check that the password is valid.
      
     path('reset_password_complete', auth_views.PasswordResetCompleteView.as_view(),  name="password_reset_complete"),
-    path('c_question', views.create_question, name = 'c_question')
 ]

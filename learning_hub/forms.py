@@ -1,5 +1,5 @@
 from django import forms
-from .models import Users, Questions
+from .models import Users, Questions, Quiz, Topic
 from django.contrib.auth import logout, authenticate, login, get_user_model
 import re
 
@@ -63,7 +63,73 @@ class LoginForm(forms.Form):
     def get_user(self):
         return self.user or None
     
+    
+    
+class CreateTopicForm(forms.ModelForm):
+    
+    topic_name = forms.CharField(label = 'Topic name', help_text = 'It should contain only letters or numbers', widget = forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
+    
+    class Meta:
+        model = Topic
+        fields = ['topic_name']
+        '''
+        help_texts = {
+            'topic_name': 'It should contain only letters or numbers' }
+        
+        widgets = {
+            'topic_name': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'})  }
+        '''
+        def clean(self):
+            cleaned_data = super(UserCreationForm, self).clean()
+            if re.search(r'[^a-zA-Z0-9_]', self.cleaned_data['topic_name'] ):
+                raise forms.ValidationError('Topic name can contain only specified symbols.')
+            return cleaned_data
+    
+    
+''' 
+class QuizCreationForm(forms.ModelForm):
+    
+     class Meta:
+        model = Quiz
+        fields = ['email', 'username', 'password']
+        fields_required = '__all__'
+        
+        
+                
+    def clean(self):
+        cl_data = super(QuestionFormSingleOrder, self).clean()
+        
+        return cl_data
+''' 
+    
+class QuestionFormSingleOrder(forms.ModelForm):
+        
+    class Meta:
+        model = Questions
+        fields = '__all__'
+        fields_required = '__all__'
+        
+        help_texts = {'answer': 'Order a suitable option number'}
+
+    
+        widgets = {
+            'question':forms.Textarea(attrs = { 'class' :'form-control','style': 'font-size: x-large', 'rows' : 3, 'cols' : 10}),
+            'option1': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'option2': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'option3': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'option4': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+          #  'answer': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'
+            'answer': forms.TextInput(attrs={'min': 1,'max': 4,'type': 'number','class' :'form-control','style': 'font-size: x-large'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionFormSingleOrder, self).__init__(*args, **kwargs)
+        
+
+
+'''   
 class QuestionForm(forms.ModelForm):
+    
     
     class Meta:
         model = Questions
@@ -96,25 +162,8 @@ class QuestionForm(forms.ModelForm):
             count += 1
         if count < 2:
             raise forms.ValidationError('Answer must match one of the options. Check your input.')
-            
-
-''' 
-
-    def clean(self):                                        #provide additional validation
-        cleaned_data = super(LoginForm, self).clean()
-        
-        if not self.errors:
-            user = authenticate(username=cleaned_data['username'], password=cleaned_data['password'])
-            if user is None:
-                raise forms.ValidationError('Invalid entered data. Repeat input.')
-            self.user = user
-        
-        return cleaned_data
-
-    def get_user(self):
-        return self.user or None
-   
 '''
+
     
         
     

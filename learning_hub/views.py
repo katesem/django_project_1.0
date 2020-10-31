@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserCreationForm, LoginForm, QuestionForm
+from .forms import UserCreationForm, LoginForm, QuestionSingleOrderForm, QuizCreationForm
 from .models import Users
 from django.contrib import messages
 from django.contrib.auth import  logout, authenticate, login, get_user_model
@@ -53,11 +53,27 @@ def my_account(request):
     
 def create_question(request):
     if request.method == "POST":
-        form = QuestionForm(request.POST)
+        form = QuestionSingleOrderForm(request.POST)
+
         if form.is_valid():
+            if form.instance.answer == '1':                    # it's not an example of good code 
+                form.instance.answer = form.instance.option1
+            elif form.instance.answer == '2':
+                form.instance.answer = form.instance.option2
+            elif form.instance.answer == '3':
+                form.instance.answer = form.instance.option3
+            else:
+                form.instance.answer == form.instance.option4
             form.save()
             return redirect('/my_account')
-    return render(request, 'c_question.html', {'form' : QuestionForm()})
+    return render(request, 'c_question.html', {'form' : QuestionSingleOrderForm()})
 
+
+def create_quiz(request):
+    if request.method == "POST":
+        form = QuizCreationForm(request.POST)
+    return render(request, 'c_quiz.html', {'form': QuizCreationForm})
+    
+    
 def password_redirect(request):
     return redirect('/log_in')
