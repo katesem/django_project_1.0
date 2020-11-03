@@ -1,5 +1,5 @@
 # Django quiz application
-This repository stores djanfo quiz application which will allow you to create and take quizzes.
+This repository stores django quiz application which will allow you to create and take quizzes.
 
 ### Some application screenshots
 
