@@ -1,19 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} My account {% endblock %}
+{% block title %} Quiz Creation {% endblock %}
 
 {% block content %}
 
-<div class="card">
-    <div class="card-header">
-      Create a question
+<br>
+{%  if options %}
+<h3 align = 'center'>Create a quiz from existing questions</h3>
+<div class = "container">
+<div class = "form-group">
+<form method = "POST">
+    
+     {% csrf_token %}
+     {{form1.as_p}}
+     {{form2.as_p}}
+      <button type = "submit" class = "btn btn-success">  Submit <i class="fa fa-check"></i> </button>
+      </form>
+</div>
+</div>
+
+{% else %}
+<div class="jumbotron">
+      <h1 class="display-4">Unfortunately, you haven't createad any questions yet. </h1>
+      <p class="lead"> Create them here before  creating the quiz. </p>
+      <hr class="my-4">
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="/create_questions" role="button">Create a new question</a>
+        <a class="btn btn-secondary btn-lg" href={{request.META.HTTP_REFERER}} role="button">Go Back</a>
+      </p>
     </div>
-    <div class="card-body">
-      <h5 class="card-title">Coming soon</h5>
-      <p class="card-text">Here you have some options, order what suits for you best.</p>
-      <a href="#" class="btn btn-dark">Create a quiz</a>
-      <a href="#" class="btn btn-secondary">Create a question</a>
-    </div>
-  </div>
+  
+  
+    {% endif %}
+  
 {% endblock%}

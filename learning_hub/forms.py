@@ -65,44 +65,7 @@ class LoginForm(forms.Form):
     
     
     
-class CreateTopicForm(forms.ModelForm):
-    
-    topic_name = forms.CharField(label = 'Topic name', help_text = 'It should contain only letters or numbers', widget = forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
-    
-    class Meta:
-        model = Topic
-        fields = ['topic_name']
-        '''
-        help_texts = {
-            'topic_name': 'It should contain only letters or numbers' }
-        
-        widgets = {
-            'topic_name': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'})  }
-        '''
-        def clean(self):
-            cleaned_data = super(UserCreationForm, self).clean()
-            if re.search(r'[^a-zA-Z0-9_]', self.cleaned_data['topic_name'] ):
-                raise forms.ValidationError('Topic name can contain only specified symbols.')
-            return cleaned_data
-    
-    
-''' 
-class QuizCreationForm(forms.ModelForm):
-    
-     class Meta:
-        model = Quiz
-        fields = ['email', 'username', 'password']
-        fields_required = '__all__'
-        
-        
-                
-    def clean(self):
-        cl_data = super(QuestionFormSingleOrder, self).clean()
-        
-        return cl_data
-''' 
-    
-class QuestionFormSingleOrder(forms.ModelForm):
+class QuestionSingleOrderForm(forms.ModelForm):
         
     class Meta:
         model = Questions
@@ -111,23 +74,87 @@ class QuestionFormSingleOrder(forms.ModelForm):
         
         help_texts = {'answer': 'Order a suitable option number'}
 
-    
         widgets = {
             'question':forms.Textarea(attrs = { 'class' :'form-control','style': 'font-size: x-large', 'rows' : 3, 'cols' : 10}),
             'option1': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
             'option2': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
             'option3': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
             'option4': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
-          #  'answer': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'
             'answer': forms.TextInput(attrs={'min': 1,'max': 4,'type': 'number','class' :'form-control','style': 'font-size: x-large'})
         }
 
     def __init__(self, *args, **kwargs):
-        super(QuestionFormSingleOrder, self).__init__(*args, **kwargs)
+        super(QuestionSingleOrderForm, self).__init__(*args, **kwargs)
+  
+
+# choice stucture for  QuizCreationForm multiplechoicefield 
+quiz_choice = list()
+for el in list(Questions.objects.all()):
+    quiz_choice.append(tuple([el.id, el.question]))
+
+
+topic_choice = list()
+for el in list(Topic.objects.all()):
+    topic_choice.append(tuple([el.id, el.topic_name]))
+    
+    
+class QuizCreationForm(forms.ModelForm):
+    
+    #topic_id_id = forms.ChoiceField(label = 'Select suitable topic', choices = topic_choice)
+    questions = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices = tuple(quiz_choice))
+    quiz_name = forms.CharField(widget = forms.TextInput)
+    #topic_id_id = forms.ChoiceField(label = 'Select suitable topic', choices = topic_choice)
+    
+    class Meta:
+        model = Quiz
+        fields = ['questions', 'quiz_name']
+        fields_required = '__all__'
+    '''           
+    def clean(self):
+        cl_data = super(QuizCreationForm, self).clean()
+        topic_id = self.cl_data['topic_id_id']
+        if not topic_id:
+            raise forms.ValidationError('Select topic')
+        return cl_data
+    '''
+    
+    
         
 
+class TopicCreationForm(forms.ModelForm):
+    
+    topic_name = forms.CharField(label = 'Topic name', help_text = 'It should contain letters and possibly  numbers', widget = forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
+    
+    class Meta:
+        model = Topic
+        fields = ['topic_name']
+        
+    def clean(self):
+        cleaned_data = super(TopicCreationForm, self).clean()
+        n_topic = self.cleaned_data['topic_name']
+        present_topic = Topic.objects.filter(topic_name = n_topic)
+        
+        if re.search(r'[^a-zA-Z0-9 ]', n_topic ) or n_topic.isdigit()  :
+            raise forms.ValidationError('Topic name can contain only specified symbols.')
+        if present_topic.exists():
+            raise forms.ValidationError('Topic with this name already exists.')
+        return cleaned_data
+
+
+class TopicOrderForm(forms.Form):
+    topic_id = forms.ChoiceField(label = 'Select suitable topic name ', widget=forms.RadioSelect, choices = topic_choice, required = True)
+'''
+topic_choice = list()
+for el in list(Topic.objects.all()):
+    topic_choice.append(tuple([el.id, el.topic_name]))
+
+
+
+'''    
 
 '''   
+
+
 class QuestionForm(forms.ModelForm):
     
     

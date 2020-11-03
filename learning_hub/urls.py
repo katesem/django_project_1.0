@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
+    
     path('', views.homepage, name='homepage'),
     path('about', views.about_page, name='about'),
     path('create_account', views.create_account, name='create_acc'),
@@ -14,7 +15,10 @@ urlpatterns = [
     
     path('create_question', views.create_question, name = 'c_question'),
     path('create_quiz', views.create_quiz, name = 'c_quiz'),
+    path('create_topic', views.create_topic, name = 'c_topic'),
     
+    path('topic/<int:topic_id>', views.topic_by_id, name = 'get_topic_by_id'),
+    path('all_topics', views.all_topics, name = "topics"),
     
     # Password reset functionality
     path('reset_password', auth_views.PasswordResetView.as_view(), name="reset_password"),

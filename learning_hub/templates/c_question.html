@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Create Question {% endblock %}
+{% block title %} Question Creation {% endblock %}
 
 {% block content %}
 
@@ -10,6 +10,7 @@
 <div class = "container">
 <div class = "form-group">
 <form method = "POST">
+    
      {% csrf_token %}
      {{form.as_p}}
      {% if form.errors %}

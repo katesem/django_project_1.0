@@ -1,6 +1,7 @@
+
 from django.shortcuts import render, redirect
-from .forms import UserCreationForm, LoginForm, QuestionSingleOrderForm, QuizCreationForm
-from .models import Users
+from .forms import UserCreationForm, LoginForm, QuestionSingleOrderForm, QuizCreationForm , TopicCreationForm, TopicOrderForm
+from .models import Users, Topic, Quiz, Questions
 from django.contrib import messages
 from django.contrib.auth import  logout, authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -50,20 +51,20 @@ def log_out(request):
 def my_account(request):
     return render(request, 'my_account.html')
 
-    
+
 def create_question(request):
     if request.method == "POST":
         form = QuestionSingleOrderForm(request.POST)
 
         if form.is_valid():
-            if form.instance.answer == '1':                    # it's not an example of good code 
+            if form.instance.answer == '1':                    
                 form.instance.answer = form.instance.option1
             elif form.instance.answer == '2':
                 form.instance.answer = form.instance.option2
             elif form.instance.answer == '3':
                 form.instance.answer = form.instance.option3
             else:
-                form.instance.answer == form.instance.option4
+                form.instance.answer == form.instance.option4m
             form.save()
             return redirect('/my_account')
     return render(request, 'c_question.html', {'form' : QuestionSingleOrderForm()})
@@ -71,9 +72,33 @@ def create_question(request):
 
 def create_quiz(request):
     if request.method == "POST":
-        form = QuizCreationForm(request.POST)
-    return render(request, 'c_quiz.html', {'form': QuizCreationForm})
-    
+        quiz_form = QuizCreationForm(request.POST)
+        select_form = TopicOrderForm(request.POST)
+        if select_form.is_valid():
+            if quiz_form.is_valid():
+                quiz = Quiz.create(select_form.cleaned_data['topic_id'], quiz_form.cleaned_data['questions'], quiz_form.cleaned_data['quiz_name'])
+            return redirect('/my_account')
+    return render(request, 'c_quiz.html', {'form1': QuizCreationForm, 'form2':  TopicOrderForm, 'options': Questions.objects.all()})
+
+
+def topic_by_id(request, topic_id):
+    #objects = Quiz.objects.get(topic_id_id = topic_id)
+    return render(request, 'topic_by_id.html', {'quizzes': Quiz.objects.get(topic_id_id = topic_id)})
+
+
+def create_topic(request):
+    if request.method == "POST":
+        creation_form = TopicCreationForm(request.POST)
+        if creation_form.is_valid() :
+            creation_form.save()
+            #return redirect('/my_account')
+    return  render(request, 'c_topic.html', {'creation_form': TopicCreationForm, 'select_form': TopicOrderForm})
+
+
     
 def password_redirect(request):
     return redirect('/log_in')
+
+
+def all_topics(request):
+    return render(request, 'all_topics.html', {'topics': Topic.objects.all()})
