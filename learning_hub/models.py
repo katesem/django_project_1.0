@@ -6,6 +6,7 @@ from django.db import models, IntegrityError
 from django.db.utils import DataError
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import PermissionsMixin
+from django.contrib.postgres.fields import ArrayField
 
 
 class Users(AbstractBaseUser, PermissionsMixin):
@@ -47,20 +48,45 @@ class Users(AbstractBaseUser, PermissionsMixin):
         except (IntegrityError, AttributeError, ValidationError, DataError):
             pass
         
-        
-class Questions(models.Model):
+
+     
+class Questions(models.Model):           # a model that stores all questions created by users
     question = models.TextField()
-    option1 = models.CharField(max_length=100)
-    option2 = models.CharField(max_length=100)
-    option3 = models.CharField(max_length=100)
-    option4 = models.CharField(max_length=100)
-    answer = models.CharField(max_length=100)
+    option1 = models.CharField(max_length = 100)
+    option2 = models.CharField(max_length = 100)
+    option3 = models.CharField(max_length = 100)
+    option4 = models.CharField(max_length = 100)
+    answer = models.CharField(max_length = 100)
         
         
     class Meta:
         verbose_name_plural = 'Questions'
         
+          
+class Topic(models.Model):  # a model that stores quiz topics 
+    topic_name = models.CharField(max_length = 50)
+   
         
+class Quiz(models.Model):               # a model that stores quizzes with questions created by users
+    topic_id = models.ForeignKey(Topic, on_delete = models.CASCADE)
+    quiz_name = models.CharField(max_length = 100)
+    questions = ArrayField(models.CharField(max_length = 200))
+    
+    
+    class Meta:
+        verbose_name_plural = 'Quizzes'
+    
+    @staticmethod
+    def create(t_id, quests, q_name):
+        try:
+            #topic_id = 
+            quiz = Quiz(topic_id_id = t_id,  quiz_name = q_name, questions = quests)
+            quiz.save()
+        except (IntegrityError, AttributeError, ValidationError, DataError):
+            pass
+        
+    
+    
 '''
 # Create your models here.
 class Category(models.Model):

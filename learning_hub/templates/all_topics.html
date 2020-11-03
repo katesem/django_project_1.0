@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} All Topics {% endblock %}
+
+{% block content %}
+<br>
+<h3 align = 'center'>Сhoose a suitable topic and take a quiz </h3><br>
+{% if topics %}
+<div class="row"></div>
+{% for topic in topics%}
+
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{topic.topic_name}}</h5>
+          <p class="card-text">Here you can take some quizzes on the subject.</p>
+          <a href="{% url 'get_topic_by_id' topic.id %}"  class="btn btn-primary">Go to quizzes</a>
+        </div>
+      </div>
+    </div>
+
+{% endfor %}
+</div>
+
+
+
+  {% else %}
+  <div class="jumbotron">
+    <h1 class="display-4">Unfortunately, no one has ever created a topic.</h1>
+    <p class="lead"> But you can create a new one.</p>
+    <hr class="my-4">
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="/create_topic" role="button">Create a new topic</a>
+      <a class="btn btn-secondary btn-lg" href={{request.META.HTTP_REFERER}} role="button">Go Back</a>
+    </p>
+  </div>
+
+
+  {% endif %}
+
+{% endblock%}

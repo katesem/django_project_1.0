@@ -1,5 +1,5 @@
 from django import forms
-from .models import Users, Questions
+from .models import Users, Questions, Quiz, Topic
 from django.contrib.auth import logout, authenticate, login, get_user_model
 import re
 
@@ -63,7 +63,100 @@ class LoginForm(forms.Form):
     def get_user(self):
         return self.user or None
     
+    
+    
+class QuestionSingleOrderForm(forms.ModelForm):
+        
+    class Meta:
+        model = Questions
+        fields = '__all__'
+        fields_required = '__all__'
+        
+        help_texts = {'answer': 'Order a suitable option number'}
+
+        widgets = {
+            'question':forms.Textarea(attrs = { 'class' :'form-control','style': 'font-size: x-large', 'rows' : 3, 'cols' : 10}),
+            'option1': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'option2': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'option3': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'option4': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
+            'answer': forms.TextInput(attrs={'min': 1,'max': 4,'type': 'number','class' :'form-control','style': 'font-size: x-large'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionSingleOrderForm, self).__init__(*args, **kwargs)
+  
+
+# choice stucture for  QuizCreationForm multiplechoicefield 
+quiz_choice = list()
+for el in list(Questions.objects.all()):
+    quiz_choice.append(tuple([el.id, el.question]))
+
+
+topic_choice = list()
+for el in list(Topic.objects.all()):
+    topic_choice.append(tuple([el.id, el.topic_name]))
+    
+    
+class QuizCreationForm(forms.ModelForm):
+    
+    #topic_id_id = forms.ChoiceField(label = 'Select suitable topic', choices = topic_choice)
+    questions = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices = tuple(quiz_choice))
+    quiz_name = forms.CharField(widget = forms.TextInput)
+    #topic_id_id = forms.ChoiceField(label = 'Select suitable topic', choices = topic_choice)
+    
+    class Meta:
+        model = Quiz
+        fields = ['questions', 'quiz_name']
+        fields_required = '__all__'
+    '''           
+    def clean(self):
+        cl_data = super(QuizCreationForm, self).clean()
+        topic_id = self.cl_data['topic_id_id']
+        if not topic_id:
+            raise forms.ValidationError('Select topic')
+        return cl_data
+    '''
+    
+    
+        
+
+class TopicCreationForm(forms.ModelForm):
+    
+    topic_name = forms.CharField(label = 'Topic name', help_text = 'It should contain letters and possibly  numbers', widget = forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
+    
+    class Meta:
+        model = Topic
+        fields = ['topic_name']
+        
+    def clean(self):
+        cleaned_data = super(TopicCreationForm, self).clean()
+        n_topic = self.cleaned_data['topic_name']
+        present_topic = Topic.objects.filter(topic_name = n_topic)
+        
+        if re.search(r'[^a-zA-Z0-9 ]', n_topic ) or n_topic.isdigit()  :
+            raise forms.ValidationError('Topic name can contain only specified symbols.')
+        if present_topic.exists():
+            raise forms.ValidationError('Topic with this name already exists.')
+        return cleaned_data
+
+
+class TopicOrderForm(forms.Form):
+    topic_id = forms.ChoiceField(label = 'Select suitable topic name ', widget=forms.RadioSelect, choices = topic_choice, required = True)
+'''
+topic_choice = list()
+for el in list(Topic.objects.all()):
+    topic_choice.append(tuple([el.id, el.topic_name]))
+
+
+
+'''    
+
+'''   
+
+
 class QuestionForm(forms.ModelForm):
+    
     
     class Meta:
         model = Questions
@@ -96,25 +189,8 @@ class QuestionForm(forms.ModelForm):
             count += 1
         if count < 2:
             raise forms.ValidationError('Answer must match one of the options. Check your input.')
-            
-
-''' 
-
-    def clean(self):                                        #provide additional validation
-        cleaned_data = super(LoginForm, self).clean()
-        
-        if not self.errors:
-            user = authenticate(username=cleaned_data['username'], password=cleaned_data['password'])
-            if user is None:
-                raise forms.ValidationError('Invalid entered data. Repeat input.')
-            self.user = user
-        
-        return cleaned_data
-
-    def get_user(self):
-        return self.user or None
-   
 '''
+
     
         
     

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} My account {% endblock %}
+{% block title %} My Account {% endblock %}
 
 {% block content %}
 
@@ -12,8 +12,8 @@
     <div class="card-body">
       <h5 class="card-title">Welcome, {{user.username}} !</h5>
       <p class="card-text">Here you have some options, order what suits for you best.</p>
-      <a href="#" class="btn btn-dark">Create a quiz</a>
-      <a href="/c_question" class="btn btn-secondary">Create a question</a>
+      <a href="/create_quiz" class="btn btn-dark">Create a quiz</a>
+      <a href="/create_question" class="btn btn-secondary">Create a question</a>
     </div>
   </div>
 {% endblock%}

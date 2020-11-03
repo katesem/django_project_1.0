@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Selected Topic {% endblock %}
+
+{% block content %}
+
+
+{% if quizzes %}
+<div class="row"></div>
+{% for quiz in  quizzes %}
+
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{quiz}}</h5>
+          <p class="card-text">Here you can take some quizzes on the subject.</p>
+          <a href="#" class="btn btn-primary">Go to quizzes</a>
+          <a href="{% url 'get_topic_by_id' topic.id %}"  class="btn">Go to quizzes</a>
+        </div>
+      </div>
+    </div>
+
+{% endfor %}
+</div>
+{% endblock %}

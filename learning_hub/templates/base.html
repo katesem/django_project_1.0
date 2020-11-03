@@ -19,36 +19,18 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-      
+
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item ">
               <a class="nav-link" href="/">Home </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">My </a>
-              </li>
 
-            <!--
-                 <li class="nav-item active">
-              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>-->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Select Topic
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-header">SQL</a>
-                <a class="dropdown-item" href="#">Indexes</a>
-                <a class="dropdown-item" href="#">Transactions</a>
-              
-                <a class="dropdown-header">Python</a>
-                <a class="dropdown-item" href="#">Basics</a>
-                <a class="dropdown-item" href="#">OOP</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+            <li class="nav-item">
+              <a class="nav-link" href="/all_topics">Take a quiz</a>
             </li>
+      
 
             <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
@@ -70,15 +52,7 @@
       {% block content %}
     {% endblock %}
 
-    <!-- {% if user.is_authenticated %}
-                <li class="nav-item">  <a class="nav-link" href="">My account</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Log out</a> </li>
-                {% else %}
-                <li class="nav-item">  <a class="nav-link" href="/create_account">Create an account</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Log in</a> </li>
-                {% endif %}-->
 
- 
     <footer class="containerf py-5">
       <div class="row">
         <div class="col-12 col-md">
@@ -88,8 +62,8 @@
         <div class="col-6 col-md">
           <h5> Main pages</h5>
           <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Home</a></li>
-            <li><a class="text-muted" href="#">Questions</a></li>
+            <li><a class="text-muted" href="/">Home</a></li>
+            <li><a class="text-muted" href="">Questions</a></li>
             <li><a class="text-muted" href="#">Quizes</a></li>
           </ul>
         </div>
@@ -99,8 +73,8 @@
             {% if user.is_authenticated %}
             <li><a class="text-muted" href="/my_account">My account</a></li>
             <li><a class="text-muted" href="/log_out">Log out</a> </li>
-            <li><a class="text-muted" href="/c_question">Create new question</a> </li>
-            <li><a class="text-muted" href="#">Create new quiz</a> </li>
+            <li><a class="text-muted" href="/create_question">Create new question</a> </li>
+            <li><a class="text-muted" href="/create_quiz">Create new quiz</a> </li>
             {% else %}
             <li><a class="text-muted" href="/create_account">Create new account</a></li>
             <li><a class="text-muted" href="/log_in">Log in</a></li>
@@ -130,3 +104,30 @@
   
   </div>
 
+ 
+
+       <!-- DROPDOWN NAV ITEM
+
+                 <li class="nav-item active">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>-->
+             <!--
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Topic
+              </a>
+             
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-header">SQL</a>
+                <a class="dropdown-item" href="#">Indexes</a>
+                <a class="dropdown-item" href="#">Transactions</a>
+              
+                <a class="dropdown-header">Python</a>
+                <a class="dropdown-item" href="#">Basics</a>
+                <a class="dropdown-item" href="#">OOP</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/all_topics">All topics</a>
+              </div>
+            </li>
+
+  -->
