@@ -63,8 +63,7 @@
           <h5> Main pages</h5>
           <ul class="list-unstyled text-small">
             <li><a class="text-muted" href="/">Home</a></li>
-            <li><a class="text-muted" href="">Questions</a></li>
-            <li><a class="text-muted" href="#">Quizes</a></li>
+            <li><a class="text-muted" href="/all_topics">Quizes</a></li>
           </ul>
         </div>
         <div class="col-6 col-md">
@@ -73,10 +72,10 @@
             {% if user.is_authenticated %}
             <li><a class="text-muted" href="/my_account">My account</a></li>
             <li><a class="text-muted" href="/log_out">Log out</a> </li>
-            <li><a class="text-muted" href="/create_question">Create new question</a> </li>
-            <li><a class="text-muted" href="/create_quiz">Create new quiz</a> </li>
+            <li><a class="text-muted" href="/create_question">Create a new question</a> </li>
+            <li><a class="text-muted" href="/create_quiz">Create a new quiz</a> </li>
             {% else %}
-            <li><a class="text-muted" href="/create_account">Create new account</a></li>
+            <li><a class="text-muted" href="/create_account">Create a new account</a></li>
             <li><a class="text-muted" href="/log_in">Log in</a></li>
             {% endif %}
           </ul>
