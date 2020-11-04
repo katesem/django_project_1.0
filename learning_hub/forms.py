@@ -133,3 +133,9 @@ class TopicCreationForm(forms.ModelForm):
 
 class TopicOrderForm(forms.Form):
     topic_id = forms.ChoiceField(label = 'Select suitable topic name ', choices = topic_choice, required = True)
+
+
+class ContactForm(forms.Form):
+    email = forms.EmailField(required = True, widget = forms.EmailInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
+    subject = forms.CharField(required = True, widget = forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
+    message = forms.CharField(required = True , widget = forms.Textarea(attrs = { 'class' :'form-control','style': 'font-size: x-large', 'rows' : 3, 'cols' : 10}) )

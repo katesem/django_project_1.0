@@ -5,22 +5,37 @@
 
 {% block content %}
 
-
-{% if quizzes %}
 <div class="row"></div>
-{% for quiz in  quizzes %}
+{% if qz %}
 
+{% for quiz in  qz %}
     <div class="col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">{{quiz}}</h5>
-          <p class="card-text">Here you can take some quizzes on the subject.</p>
+          <h5 class="card-title">{{quiz.quiz_name}}</h5>
+          <p class="card-text">Number of questions :{{quiz.questions.count}}</p>
           <a href="#" class="btn btn-primary">Go to quizzes</a>
           <a href="{% url 'get_topic_by_id' topic.id %}"  class="btn">Go to quizzes</a>
         </div>
       </div>
     </div>
+  </div>
 
 {% endfor %}
+
+{% else %}
+<div class="jumbotron">
+  <h1 class="display-4">Unfortunately, no one has ever created a quiz with this topic.</h1>
+  <p class="lead"> But you can create a new one.</p>
+  <hr class="my-4">
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="/create_quiz" role="button">Create a new quiz</a>
+    <a class="btn btn-secondary btn-lg" href={{request.META.HTTP_REFERER}} role="button">Go Back</a>
+  </p>
 </div>
+
+
+{% endif %}
+</div>
+
 {% endblock %}

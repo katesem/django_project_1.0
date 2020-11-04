@@ -1,11 +1,11 @@
-
 from django.shortcuts import render, redirect
-from .forms import UserCreationForm, LoginForm, QuestionSingleOrderForm, QuizCreationForm , TopicCreationForm, TopicOrderForm
+from .forms import UserCreationForm, LoginForm, QuestionSingleOrderForm, QuizCreationForm , TopicCreationForm, TopicOrderForm, ContactForm
 from .models import Users, Topic, Quiz, Questions
 from django.contrib import messages
 from django.contrib.auth import  logout, authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
-from django import forms
+from django.core.mail import send_mail
+from mysite.settings import EMAIL_HOST_USER 
 
 Users = get_user_model()
 
@@ -43,6 +43,7 @@ def log_in(request):
 
     return render(request, 'log_in.html', {'form':  LoginForm()})
 
+
 def log_out(request):
     logout(request)
     return redirect('/')
@@ -52,6 +53,7 @@ def my_account(request):
     return render(request, 'my_account.html')
 
 
+@login_required()
 def create_question(request):
     if request.method == "POST":
         form = QuestionSingleOrderForm(request.POST)
@@ -70,6 +72,8 @@ def create_question(request):
     return render(request, 'c_question.html', {'form' : QuestionSingleOrderForm()})
 
 
+
+@login_required
 def create_quiz(request):
     if request.method == "POST":
         quiz_form = QuizCreationForm(request.POST)
@@ -83,7 +87,8 @@ def create_quiz(request):
 
 def topic_by_id(request, topic_id):
     #objects = Quiz.objects.get(topic_id_id = topic_id)
-    return render(request, 'topic_by_id.html', {'quizzes': Quiz.objects.get(topic_id_id = topic_id)})
+    
+    return render(request, 'topic_by_id.html', context = {'qz': Quiz.objects.filter(topic_id_id = topic_id)})
 
 
 def create_topic(request):
@@ -102,3 +107,28 @@ def password_redirect(request):
 
 def all_topics(request):
     return render(request, 'all_topics.html', {'topics': Topic.objects.all()})
+
+
+def contact(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid() :
+            send_mail(
+            form.cleaned_data['subject'],
+            form.cleaned_data['message'],
+            form.cleaned_data['email'],
+            [EMAIL_HOST_USER],
+            fail_silently=False,
+        )
+            return redirect('/')
+    return render(request, 'contact.html', {'contact_form': ContactForm})
+
+
+send_mail(
+    'Subject here',
+    'Here is the message.',
+    'from@example.com',
+    [EMAIL_HOST_USER],
+    fail_silently=False,
+)
+
