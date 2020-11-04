@@ -99,25 +99,14 @@ for el in list(Topic.objects.all()):
     
     
 class QuizCreationForm(forms.ModelForm):
-    
-    #topic_id_id = forms.ChoiceField(label = 'Select suitable topic', choices = topic_choice)
     questions = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices = tuple(quiz_choice))
     quiz_name = forms.CharField(widget = forms.TextInput)
-    #topic_id_id = forms.ChoiceField(label = 'Select suitable topic', choices = topic_choice)
     
     class Meta:
         model = Quiz
         fields = ['questions', 'quiz_name']
         fields_required = '__all__'
-    '''           
-    def clean(self):
-        cl_data = super(QuizCreationForm, self).clean()
-        topic_id = self.cl_data['topic_id_id']
-        if not topic_id:
-            raise forms.ValidationError('Select topic')
-        return cl_data
-    '''
-    
+
     
         
 
@@ -143,54 +132,11 @@ class TopicCreationForm(forms.ModelForm):
 
 class TopicOrderForm(forms.Form):
     topic_id = forms.ChoiceField(label = 'Select suitable topic name ', widget=forms.RadioSelect, choices = topic_choice, required = True)
-'''
-topic_choice = list()
-for el in list(Topic.objects.all()):
-    topic_choice.append(tuple([el.id, el.topic_name]))
 
 
 
-'''    
-
-'''   
-
-
-class QuestionForm(forms.ModelForm):
-    
-    
-    class Meta:
-        model = Questions
-        fields = '__all__'
-        fields_required = '__all__'
-         
-        help_texts = {
-            'email': 'Must contain only letters.', 
-            'username': 'Must contain at least 6 including only letters, numbers or underscore. ',
-            'password': 'Must contain at least 6 symbols including at least 1 letter and 1 number.',
-        }
-        
-        widgets = {
-            'question':forms.Textarea(attrs = { 'class' :'form-control','style': 'font-size: x-large', 'rows' : 3, 'cols' : 10}),
-            'option1': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
-            'option2': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
-            'option3': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
-            'option4': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}),
-            'answer': forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'})
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(QuestionForm, self).__init__(*args, **kwargs)
-        
-        
-    def clean(self):
-        cl_data = super(QuestionForm, self).clean()
-        count = 0
-        if cl_data['answer'] in [*cl_data.values()]:
-            count += 1
-        if count < 2:
-            raise forms.ValidationError('Answer must match one of the options. Check your input.')
-'''
-
-    
-        
+class ContactForm(forms.Form):
+    email = forms.EmailField(required = True, widget = forms.EmailInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
+    subject = forms.CharField(required = True, widget = forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
+    message = forms.CharField(required = True , widget = forms.Textarea(attrs = { 'class' :'form-control','style': 'font-size: x-large', 'rows' : 3, 'cols' : 10}) )
     

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Contact Form {% endblock %}
+
+{% block content %}
+
+<br>
+<h3 align = 'center'>Contact me</h3>
+<div class = "container">
+<div class = "form-group">
+<form method = "POST">
+    
+     {% csrf_token %}
+     {{contact_form.as_p}}
+      <button type = "submit" class = "btn btn-success">  Submit <i class="fa fa-check"></i> </button>
+      <a class="btn btn-secondary btn" href={{request.META.HTTP_REFERER}} role="button">Go Back</a>
+      </form>
+</div>
+</div>
+
+{% endblock%}
