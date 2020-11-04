@@ -23,3 +23,16 @@ This repository stores django quiz application which will allow you to create an
 **About page**
 
 ![About_page](/screenshots/about_page.png?raw=true "Home page view")
+
+
+
+**Question creation**
+
+![About_page](/screenshots/create_question.png?raw=true "Home page view")
+
+
+
+**Quiz creation**
+
+![About_page](/screenshots/create_quiz.png?raw=true "Home page view")
+
