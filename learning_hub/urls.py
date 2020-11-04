@@ -12,7 +12,7 @@ urlpatterns = [
     path('log_out', views.log_out, name = 'logout'),
     path('my_account', views.my_account, name = 'my_account'),
     path('accounts/login/', views.password_redirect),
-    
+    path('contact', views.contact),
     path('create_question', views.create_question, name = 'c_question'),
     path('create_quiz', views.create_quiz, name = 'c_quiz'),
     path('create_topic', views.create_topic, name = 'c_topic'),
