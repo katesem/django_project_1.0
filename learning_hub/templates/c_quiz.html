@@ -17,6 +17,7 @@
      {{form1|crispy}}
      
      {{form2|crispy}}
+      <p>Haven't found a suitable topic for your quiz? Create it <a href = "/create_topic">here.</a></p>
       <button type = "submit" class = "btn btn-success">  Submit <i class="fa fa-check"></i> </button>
       <a class="btn btn-secondary btn" href={{request.META.HTTP_REFERER}} role="button">Go Back</a>
       </form>
@@ -26,7 +27,7 @@
 {% else %}
 <div class="jumbotron">
       <h1 class="display-4">Unfortunately, you haven't createad any questions yet. </h1>
-      <p class="lead"> Create them here before  creating the quiz. </p>
+      <p class="lead"> Create some questions before creating the quiz. </p>
       <hr class="my-4">
       <p class="lead">
         <a class="btn btn-primary btn-lg" href="/create_questions" role="button">Create a new question</a>

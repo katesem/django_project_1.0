@@ -13,9 +13,8 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{quiz.quiz_name}}</h5>
-          <p class="card-text">Number of questions :{{quiz.questions.count}}</p>
-          <a href="#" class="btn btn-primary">Go to quizzes</a>
-          <a href="{% url 'get_topic_by_id' topic.id %}"  class="btn">Go to quizzes</a>
+          <p class="card-text">Number of questions :{{quiz.questions|length }}</p>
+          <a href="{% url 'take_a_quiz' quiz.id %}" class="btn btn-primary">Go to quiz</a>
         </div>
       </div>
     </div>
