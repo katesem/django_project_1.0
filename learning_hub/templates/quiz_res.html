@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Your Score {% endblock %}
+
+{% block content %}
+<div class="col-lg-8 border border p-4 m-4 mx-auto">
+
+{% if flag %}
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading"> Well done!</h4>
+    <p style = "font-size:18px;">You have passed a quiz.  </p>
+   
+{% else %}
+<div class="alert alert-danger" role="alert">
+  <h4 class="alert-heading"> You can do more.</h4>
+  <p style = "font-size:18px;">Unfortunately, you have not passed a quiz. But you can try one more time :)</p>
+
+{% endif %}
+    <hr>
+    <p class="mb-0" style = "font-size:18px;"> Your score is <b>{{score }}%</b>. If you would like to check your answers, click <a href="/quiz_answers"> here.</a></p>
+   <br> <a class="btn btn-secondary btn" href="/all_topics" role="button">Back to the quizzes</a>
+  </div>
+</div>
+
+  {% endblock  %}

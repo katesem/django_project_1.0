@@ -64,7 +64,6 @@ class LoginForm(forms.Form):
         return self.user or None
     
     
-    
 class QuestionSingleOrderForm(forms.ModelForm):
         
     class Meta:
@@ -91,11 +90,6 @@ class QuestionSingleOrderForm(forms.ModelForm):
 quiz_choice = list()
 for el in list(Questions.objects.all()):
     quiz_choice.append(tuple([el.id, el.question]))
-
-
-topic_choice = list()
-for el in list(Topic.objects.all()):
-    topic_choice.append(tuple([el.id, el.topic_name]))
     
     
 class QuizCreationForm(forms.ModelForm):
@@ -108,12 +102,18 @@ class QuizCreationForm(forms.ModelForm):
         fields = ['questions', 'quiz_name']
         fields_required = '__all__'
 
-    
+
+topic_choice = list()
+for el in list(Topic.objects.all()):
+    topic_choice.append(tuple([el.id, el.topic_name]))
+
+class TopicOrderForm(forms.Form):
+    topic_id = forms.ChoiceField(label = 'Select suitable topic name ', choices = topic_choice, required = True)
         
 
 class TopicCreationForm(forms.ModelForm):
     
-    topic_name = forms.CharField(label = 'Topic name', help_text = 'It should contain letters and possibly  numbers', widget = forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
+    topic_name = forms.CharField(label = 'New topic name', help_text = 'It should contain letters and possibly  numbers.', widget = forms.TextInput(attrs={'class' :'form-control','style': 'font-size: x-large'}))
     
     class Meta:
         model = Topic
@@ -129,10 +129,6 @@ class TopicCreationForm(forms.ModelForm):
         if present_topic.exists():
             raise forms.ValidationError('Topic with this name already exists.')
         return cleaned_data
-
-
-class TopicOrderForm(forms.Form):
-    topic_id = forms.ChoiceField(label = 'Select suitable topic name ', choices = topic_choice, required = True)
 
 
 class ContactForm(forms.Form):

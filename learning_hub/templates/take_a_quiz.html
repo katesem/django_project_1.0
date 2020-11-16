@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{quiz.quiz_name}} {% endblock %}
+
+{% block content %}
+
+ <br> <center><h1>{{quiz_name}}</h1></center>
+
+    <div class="col-lg-8 border border-success p-4 m-4 mx-auto">
+
+          {% for q in quests %}
+
+             <br> <h4>{{q.question}}</h4>
+                <form  method = "POST">   
+                  {% csrf_token %}
+                  <div class="form-check">
+                    <input type="checkbox" name="answer"  value="{{q.option1}}">&nbsp;{{q.option1}}
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" name="answer"  value="{{q.option2}}">&nbsp;{{q.option2}} 
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" name="answer" value="{{q.option3}}" >&nbsp;{{q.option3}} 
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" name="answer" value="{{q.option4}}">&nbsp;{{q.option4}} 
+                  </div>
+             {% endfor %}
+           
+             <br>
+             <a class="btn btn-secondary btn-sm" href="" id="clear-button">Clear my answers</a><br><br> 
+             <button type = "submit" class="btn form-control btn-success" id="submitAnswer">Submit Quiz</button></a>  
+            </div> 
+
+        </form>
+      
+   
+    <script src="{% static 'js/script.js' %}"> </script>
+
+{% endblock %}
+
+<!---
+  <div class="form-group">
+                        <button class="btn  btn-success" id="save_ans">Submit Answer</button>
+                    </div>
+                  
+     <div>
+                          <label><input type="checkbox" name="option1"  id="option1" value="{{q.option1}}">&nbsp;{{q.option1}} </label> 
+                        </div>
+
+                        <div >
+                          <label ><input type="checkbox" name="option2"  id="option2" value="{{q.option2}}">&nbsp;{{q.option2}}</label>
+                        </div>
+
+                        <div>
+                          <label ><input type="checkbox" name="option3" id="option3" value="{{q.option3}}">&nbsp;{{q.option3}}</label>
+                        </div>
+
+                        <div >
+                          <label ><input type="checkbox" name="option4"  id="option4" value="{{q.option4}}">&nbsp;{{q.option4}} </label>
+                        </div>        
+                  
+                  
+                  
+                  -->

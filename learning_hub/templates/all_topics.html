@@ -4,24 +4,27 @@
 {% block title %} All Topics {% endblock %}
 
 {% block content %}
-<br>
-<h3 align = 'center'>Сhoose a suitable topic and take a quiz </h3><br>
+
 {% if topics %}
-<div class="row">
-{% for topic in topics%}
 
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{topic.topic_name}}</h5>
-          <p class="card-text">Here you can take some quizzes on the subject.</p>
-          <a href="{% url 'get_topic_by_id' topic.id %}"  class="btn btn-primary">Go to quizzes</a>
+<div class="jumbotron">
+  <h3 align = 'center'>Сhoose a suitable topic and take a quiz </h3><br><br>
+  <div class="card-group">
+    {% for topic in topics%}
+        <div class="col-sm-6">
+          <div class="card bg-light mb-3" style="max-width: 40rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{topic.topic_name}}</h5>
+              <p class="card-text">Here you can take some quizzes on the subject.</p>
+              <a href="{% url 'get_topic_by_id' topic.id %}"  class="btn btn-primary">Go to quizzes</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-
-{% endfor %}
+    {% endfor %}
+  </div>
 </div>
+
+
 
 
 

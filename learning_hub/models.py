@@ -79,30 +79,14 @@ class Quiz(models.Model):               # a model that stores quizzes with quest
     @staticmethod
     def create(t_id, quests, q_name):
         try:
-            #topic_id = 
             quiz = Quiz(topic_id_id = t_id,  quiz_name = q_name, questions = quests)
             quiz.save()
         except (IntegrityError, AttributeError, ValidationError, DataError):
             pass
         
-    
-    
 '''
-# Create your models here.
-class Category(models.Model):
-    categ_name = models.CharField(max_length = 50, unique = True)
-    
-    
-class Meta:
-    verbose_name_plural = 'Categories'
-    
-    
-class Resource(models.Model):
-    categ_id = models.ForeignKey(Category, on_delete=models.CASCADE)
-    resource_name = models.CharField(max_length = 50, unique = True)
-    resource_desc = models.TextField(blank = True, max_length = 300)
-    
-    
-class Meta:
-    verbose_name_plural = 'Resources'
+class CompletedTest(models.Model):
+    user_id = models.ForeignKey(Users, on_delete = models.CASCADE)
+    answers = ArrayField(models.IntegerField())
+    score = models.IntegerField()
 '''

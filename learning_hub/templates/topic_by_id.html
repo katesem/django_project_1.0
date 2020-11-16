@@ -5,23 +5,26 @@
 
 {% block content %}
 
-<div class="row"></div>
+
 {% if qz %}
+<div class="jumbotron">
+  <center><h3>All quizzes</h3></center><br>
+ <div class="card-group">
 
-{% for quiz in  qz %}
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{quiz.quiz_name}}</h5>
-          <p class="card-text">Number of questions :{{quiz.questions|length }}</p>
-          <a href="{% url 'take_a_quiz' quiz.id %}" class="btn btn-primary">Go to quiz</a>
+    {% for quiz in  qz %}
+        <div class="col-sm-6">
+          <div class="card bg-light mb-3" style="max-width: 50rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{quiz.quiz_name}}</h5>
+              <p class="card-text">Number of questions :{{quiz.questions|length }}</p>
+              <a href="{% url 'take_a_quiz' quiz.id %}" class="btn btn-primary">Go to quiz</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
+    {% endfor %}
 
-{% endfor %}
-
+</div>
+</div>
 {% else %}
 <div class="jumbotron">
   <h1 class="display-4">Unfortunately, no one has ever created a quiz with this topic.</h1>

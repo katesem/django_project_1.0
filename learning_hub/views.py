@@ -6,6 +6,7 @@ from django.contrib.auth import  logout, authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from mysite.settings import EMAIL_HOST_USER 
+from django.core.paginator import EmptyPage, InvalidPage, Paginator
 
 Users = get_user_model()
 
@@ -59,14 +60,14 @@ def create_question(request):
         form = QuestionSingleOrderForm(request.POST)
 
         if form.is_valid():
-            if form.instance.answer == '1':                    
+            if form.instance.answer == '1':                    # needs some js for better working
                 form.instance.answer = form.instance.option1
             elif form.instance.answer == '2':
                 form.instance.answer = form.instance.option2
             elif form.instance.answer == '3':
                 form.instance.answer = form.instance.option3
             else:
-                form.instance.answer == form.instance.option4m
+                form.instance.answer == form.instance.option4
             form.save()
             return redirect('/my_account')
     return render(request, 'c_question.html', {'form' : QuestionSingleOrderForm()})
@@ -86,8 +87,6 @@ def create_quiz(request):
 
 
 def topic_by_id(request, topic_id):
-    #objects = Quiz.objects.get(topic_id_id = topic_id)
-    
     return render(request, 'topic_by_id.html', context = {'qz': Quiz.objects.filter(topic_id_id = topic_id)})
 
 
@@ -96,19 +95,53 @@ def create_topic(request):
         creation_form = TopicCreationForm(request.POST)
         if creation_form.is_valid() :
             creation_form.save()
-            #return redirect('/my_account')
-    return  render(request, 'c_topic.html', {'creation_form': TopicCreationForm, 'select_form': TopicOrderForm})
+            return redirect('/create_quiz')
+    return  render(request, 'c_topic.html', {'creation_form': TopicCreationForm })
 
 
+
+def take_a_quiz(request, quiz_id):
+    if request.method == "POST":
+        request.session['quiz_id'] = quiz_id
+        request.session['answers'] = request.POST.getlist('answer')
+        return redirect('/quiz_results')
+    else:
+        questions_list = [ Questions.objects.get(id = q) for q in Quiz.objects.get(id = quiz_id).questions]
+        
+        return render(request,'take_a_quiz.html', {'quests': questions_list, 
+                                                   'quiz_name' : Quiz.objects.get(id = quiz_id).quiz_name
+                                                   })
     
+    
+    
+def quiz_results(request):
+    answers = request.session['answers']
+    quests = Quiz.objects.get(id = request.session['quiz_id']).questions 
+    score = 0
+    for ans,que in zip(answers, quests):
+        if Questions.objects.get(id = int(que)).answer == ans:
+            score += 1
+    score = score / len(Quiz.objects.get(id = request.session['quiz_id']).questions) * 100
+
+    return render(request, 'quiz_res.html', {'score': int(score),
+                                             'flag': True if score > 50  else False})
+
+
+def quiz_answers(request):
+    return render(request, 'quiz_answers.html')
+
+
+
 def password_redirect(request):
     return redirect('/log_in')
+
 
 
 def all_topics(request):
     return render(request, 'all_topics.html', {'topics': Topic.objects.all()})
 
-
+    
+    
 def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -132,3 +165,34 @@ send_mail(
     fail_silently=False,
 )
 
+
+'''
+def take_a_quiz(request, quiz_id):
+    answer = None
+
+    
+    questions_list = [ Questions.objects.get(id = q) for q in Quiz.objects.get(id = quiz_id).questions]
+    print(questions_list)
+    
+    paginator = Paginator(Quiz.objects.get(id = quiz_id).questions, 1)
+    try:
+        page = int(request.GET.get('page','1'))  
+    except:
+        page = 1
+    try:
+        quiz = paginator.page(page)
+    except(EmptyPage,InvalidPage):
+
+        quiz = paginator.page(paginator.num_pages)
+        
+    return render(request,'take_a_quiz.html', {'obj': Quiz.objects.get(id = quiz_id), 
+                                             'quiz': quiz, 
+                                             'quests': questions_list, 
+                                             'answer': answer}  )
+                                            
+    if request.method == 'POST':
+        data = request.POST['variable']
+        return redirect('/quiz_results')                         
+                                            
+                                            
+                                             '''
