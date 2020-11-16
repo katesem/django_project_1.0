@@ -27,7 +27,6 @@ urlpatterns = [
     # urls related to quiz taking
     path('take_a_quiz/<int:quiz_id>', views.take_a_quiz, name = 'take_a_quiz'),
     path('quiz_results', views.quiz_results, name = 'quiz_results'),
-    path('quiz_answers', views.quiz_answers, name = 'q_answers'),
     
     # Password reset functionality
     path('reset_password', auth_views.PasswordResetView.as_view(), name="reset_password"),

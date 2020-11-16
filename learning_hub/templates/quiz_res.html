@@ -6,7 +6,7 @@
 {% block content %}
 <div class="col-lg-8 border border p-4 m-4 mx-auto">
 
-{% if flag %}
+{% if score > 49 %}
 <div class="alert alert-success" role="alert">
     <h4 class="alert-heading"> Well done!</h4>
     <p style = "font-size:18px;">You have passed a quiz.  </p>
@@ -18,8 +18,67 @@
 
 {% endif %}
     <hr>
-    <p class="mb-0" style = "font-size:18px;"> Your score is <b>{{score }}%</b>. If you would like to check your answers, click <a href="/quiz_answers"> here.</a></p>
-   <br> <a class="btn btn-secondary btn" href="/all_topics" role="button">Back to the quizzes</a>
+    <p class="mb-0" style = "font-size:18px;"> Your score is <b>{{score }}%</b>. </p><br>
+    <!-- Button trigger modal -->
+<p> 
+  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalLong">
+   Check my answers
+</button>
+  <a class="btn btn-secondary btn" href="/all_topics" role="button">Back to the quizzes</a>
+</p>
+
+<div class="modal fade " id="exampleModalLong" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Quiz Answers</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Number</th>
+              <th scope="col">Your answer</th>
+              <th scope="col">Right answer</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+      <tbody>
+        {% for ans,user_answer in answer_list %}
+            {% if ans == user_answer%}
+              <tr class="table-success">
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ans}}</td>
+                <td>{{user_answer}}</td>  
+                <td><i class="fa fa-check"></i></td>
+              </tr>
+           
+
+            {% else %}
+                <tr class="table-danger">
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ans}}</td>
+                  <td>{{user_answer}}</td>
+                  <td> <i class="fa fa-times"></i></td>
+                </tr>
+             {% endif %}
+            {% endfor %}
+           
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ 
   </div>
 </div>
 

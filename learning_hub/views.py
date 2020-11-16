@@ -115,20 +115,20 @@ def take_a_quiz(request, quiz_id):
     
     
 def quiz_results(request):
+    score, answer_list = 0, []
     answers = request.session['answers']
     quests = Quiz.objects.get(id = request.session['quiz_id']).questions 
-    score = 0
+    
     for ans,que in zip(answers, quests):
+        answer_list.append(Questions.objects.get(id = int(que)).answer)
         if Questions.objects.get(id = int(que)).answer == ans:
             score += 1
+
     score = score / len(Quiz.objects.get(id = request.session['quiz_id']).questions) * 100
 
     return render(request, 'quiz_res.html', {'score': int(score),
-                                             'flag': True if score > 50  else False})
+                                             'answer_list': zip(answer_list, answers)})
 
-
-def quiz_answers(request):
-    return render(request, 'quiz_answers.html')
 
 
 
@@ -164,35 +164,3 @@ send_mail(
     [EMAIL_HOST_USER],
     fail_silently=False,
 )
-
-
-'''
-def take_a_quiz(request, quiz_id):
-    answer = None
-
-    
-    questions_list = [ Questions.objects.get(id = q) for q in Quiz.objects.get(id = quiz_id).questions]
-    print(questions_list)
-    
-    paginator = Paginator(Quiz.objects.get(id = quiz_id).questions, 1)
-    try:
-        page = int(request.GET.get('page','1'))  
-    except:
-        page = 1
-    try:
-        quiz = paginator.page(page)
-    except(EmptyPage,InvalidPage):
-
-        quiz = paginator.page(paginator.num_pages)
-        
-    return render(request,'take_a_quiz.html', {'obj': Quiz.objects.get(id = quiz_id), 
-                                             'quiz': quiz, 
-                                             'quests': questions_list, 
-                                             'answer': answer}  )
-                                            
-    if request.method == 'POST':
-        data = request.POST['variable']
-        return redirect('/quiz_results')                         
-                                            
-                                            
-                                             '''
