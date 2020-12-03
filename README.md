@@ -36,3 +36,15 @@ This repository stores django quiz application which will allow you to create an
 **Quiz creation**
 
 ![Quiz creation_page](/screenshots/create_quiz_page.png?raw=true "Quiz creation view")
+
+
+
+**Quiz taking**
+
+![Quiz taking_page](/screenshots/take_a_quiz.png?raw=true "Quiz taking view")
+
+
+
+**Quiz results**
+
+![Quiz results_page](/screenshots/quiz_results_page.png?raw=true "Quiz results view")
